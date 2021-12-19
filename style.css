@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap");
 
 h2 {
   font-family: Courier New;
@@ -22,6 +23,9 @@ section {
 }
 body {
   font-family: "Raleway", sans-serif;
+}
+p {
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .container2 {
