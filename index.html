@@ -1,296 +1,529 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adi Cahyono — Fullstack Developer &amp; IT Support</title>
+<meta name="description" content="Portofolio Adi Cahyono — Fullstack Web &amp; Android Developer, IT Support. Samarinda, Indonesia.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ============ Design tokens ============ */
+  :root{
+    --bg: #10131a;
+    --panel: #161a24;
+    --panel-2: #1c212e;
+    --border: #2a3040;
+    --text: #e8ebf2;
+    --muted: #8891a5;
+    --teal: #4fd8c4;
+    --amber: #f5a65b;
+    --coral: #ef7d7d;
+    --radius: 10px;
+    --maxw: 1100px;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--sans); line-height:1.6; font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  section{padding:96px 0;}
+  @media (max-width:640px){ section{padding:64px 0;} }
+  h1,h2,h3{margin:0; font-weight:700;}
+  .mono{font-family:var(--mono);}
+  .muted{color:var(--muted);}
+  ::selection{background:var(--teal); color:#0a0d12;}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:4px;}
 
-    <!-- Icons  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+  /* ============ Nav ============ */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(16,19,26,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .logo{font-family:var(--mono); font-weight:600; font-size:16px; letter-spacing:-0.02em;}
+  .logo .fn{color:var(--teal);}
+  .navlinks{display:flex; gap:28px; font-family:var(--mono); font-size:14px;}
+  .navlinks a{color:var(--muted); text-decoration:none; padding:6px 2px; position:relative;}
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:0; height:1px; width:0;
+    background:var(--teal); transition:width .25s ease;
+  }
+  .navlinks a:hover, .navlinks a.active{color:var(--text);}
+  .navlinks a:hover::after, .navlinks a.active::after{width:100%;}
+  .navtoggle{display:none; background:none; border:1px solid var(--border); color:var(--text); border-radius:8px; width:40px; height:40px; font-size:18px; cursor:pointer;}
+  @media (max-width:760px){
+    .navlinks{
+      position:absolute; top:64px; left:0; right:0; background:var(--panel);
+      border-bottom:1px solid var(--border); flex-direction:column; gap:0;
+      padding:8px 24px; display:none;
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:12px 0; border-bottom:1px solid var(--border);}
+    .navlinks a:last-child{border-bottom:none;}
+    .navtoggle{display:block;}
+  }
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css" />
-    <title>My Portofolio | Adi Cahyono</title>
-    <link rel="icon" type="image/x-icon" href="img/resume.png" />
+  /* ============ Hero ============ */
+  .hero{padding:72px 0 96px;}
+  .hero .grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .hero .grid{grid-template-columns:1fr; gap:40px;} }
+  .eyebrow{font-family:var(--mono); font-size:14px; color:var(--teal);}
+  .hero h1{
+    font-size:clamp(34px, 5vw, 54px); line-height:1.08; letter-spacing:-0.02em;
+    margin:14px 0 18px;
+  }
+  .roles{font-family:var(--mono); font-size:clamp(15px,2vw,18px); color:var(--amber); min-height:1.6em;}
+  .roles .cursor{display:inline-block; width:9px; background:var(--amber); margin-left:2px; animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .hero p.lede{max-width:52ch; color:var(--muted); font-size:17px; margin:20px 0 28px;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:14px; padding:12px 20px; border-radius:8px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--border); transition:border-color .2s ease, background .2s ease;
+  }
+  .btn.primary{background:var(--teal); color:#0a0d12; border-color:var(--teal); font-weight:600;}
+  .btn.primary:hover{background:#3ec2af;}
+  .btn.ghost{color:var(--text);}
+  .btn.ghost:hover{border-color:var(--teal); color:var(--teal);}
 
-    <!--Iconify-->
-    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  </head>
+  /* terminal card */
+  .terminal{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden; box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px; padding:11px 14px;
+    background:var(--panel-2); border-bottom:1px solid var(--border);
+  }
+  .dot{width:10px; height:10px; border-radius:50%;}
+  .dot.r{background:#ef7d7d;} .dot.y{background:#f5c56b;} .dot.g{background:#6fd39a;}
+  .term-title{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--muted);}
+  .term-body{padding:20px; font-family:var(--mono); font-size:13.5px; color:#c8cede;}
+  .term-body .prompt{color:var(--teal);}
+  .term-body .out{color:var(--muted); margin:2px 0 14px; padding-left:0;}
+  .term-body .photo-row{display:flex; align-items:center; gap:14px; margin-top:16px;}
+  .term-body img.avatar{
+    width:56px; height:56px; border-radius:8px; object-fit:cover; border:1px solid var(--border);
+  }
+  .term-body .stat{font-size:12.5px;}
+  .term-body .stat b{color:var(--text);}
 
-  <body id="home">
-    <!-- start Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark style shadow fixed-top" style="background-color: #054047">
-      <div class="container">
-        <a class="navbar-brand" href="#"
-          ><b><i>ADI CAHYONO</i></b></a
-        >
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#projects">Projects</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact-Me</a>
-            </li>
-          </ul>
+  /* ============ Section heads ============ */
+  .head{margin-bottom:40px;}
+  .head .tag{font-family:var(--mono); font-size:13px; color:var(--teal);}
+  .head h2{font-size:clamp(26px,3.4vw,34px); margin-top:8px; letter-spacing:-0.01em;}
+
+  /* ============ About ============ */
+  .about-grid{display:grid; grid-template-columns:1.3fr 0.9fr; gap:48px;}
+  @media (max-width:820px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid p{color:#c6cad6; margin:0 0 16px; max-width:62ch;}
+  .stat-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .stat-card + .stat-card{margin-top:16px;}
+  .stat-card .num{font-family:var(--mono); font-size:26px; color:var(--teal); font-weight:700;}
+  .stat-card .label{font-size:13.5px; color:var(--muted); margin-top:4px;}
+
+  /* ============ Skills ============ */
+  .skill-groups{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:20px;}
+  .skill-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:22px;
+  }
+  .skill-card h3{font-family:var(--mono); font-size:14px; color:var(--amber); margin-bottom:14px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    display:flex; align-items:center; gap:7px; background:var(--panel-2); border:1px solid var(--border);
+    border-radius:999px; padding:6px 12px 6px 8px; font-size:13px; color:#d3d7e2;
+  }
+  .chip img{width:16px; height:16px; object-fit:contain;}
+
+  /* ============ Projects ============ */
+  .filter-row{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px;}
+  .filter-btn{
+    font-family:var(--mono); font-size:13px; padding:8px 14px; border-radius:999px;
+    border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer;
+    transition:all .2s ease;
+  }
+  .filter-btn:hover{color:var(--text); border-color:#3a4155;}
+  .filter-btn.active{background:var(--teal); border-color:var(--teal); color:#0a0d12; font-weight:600;}
+  .proj-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px;}
+  .proj-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px; display:flex; flex-direction:column; gap:12px; text-decoration:none;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .proj-card:hover{border-color:var(--teal); transform:translateY(-2px);}
+  .proj-top{display:flex; align-items:start; justify-content:space-between; gap:10px;}
+  .proj-name{font-family:var(--mono); font-size:15px; font-weight:600; color:var(--text); word-break:break-word;}
+  .proj-desc{color:var(--muted); font-size:13.8px; min-height:38px;}
+  .proj-meta{display:flex; align-items:center; gap:14px; font-size:12.5px; color:var(--muted); font-family:var(--mono);}
+  .lang-dot{width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px;}
+  .proj-arrow{color:var(--muted); font-size:16px;}
+  .proj-card:hover .proj-arrow{color:var(--teal);}
+  #projStatus{font-family:var(--mono); font-size:13.5px; color:var(--muted); margin-bottom:20px;}
+
+  /* ============ Contact ============ */
+  .contact-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;}
+  .contact-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:24px; text-decoration:none; display:flex; flex-direction:column; gap:8px;
+    transition:border-color .2s ease;
+  }
+  .contact-card:hover{border-color:var(--teal);}
+  .contact-card .clabel{font-family:var(--mono); font-size:12.5px; color:var(--teal);}
+  .contact-card .cval{font-size:15px; font-weight:600;}
+  .contact-card .cval{word-break:break-word;}
+
+  footer{border-top:1px solid var(--border); padding:32px 0; text-align:center;}
+  footer p{font-family:var(--mono); font-size:12.5px; color:var(--muted); margin:0;}
+  footer a{color:var(--amber); text-decoration:none;}
+
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap" aria-label="Navigasi utama">
+    <a href="#home" class="logo">adi<span class="fn">.cahyono()</span></a>
+    <button class="navtoggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+    <div class="navlinks" id="navLinks">
+      <a href="#about" data-nav>~/about</a>
+      <a href="#skills" data-nav>~/skills</a>
+      <a href="#work" data-nav>~/work</a>
+      <a href="#contact" data-nav>~/contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <div class="wrap grid">
+      <div>
+        <div class="eyebrow">Samarinda, Indonesia</div>
+        <h1>Adi Cahyono membangun<br>aplikasi web &amp; Android<br>yang rapi dan tuntas.</h1>
+        <div class="roles mono"><span id="roleText">Fullstack Web Developer</span><span class="cursor">&nbsp;</span></div>
+        <p class="lede">Lulusan D-IV Teknik Informatika Multimedia dengan predikat <em>Magna Cumlaude</em> (IPK 3,86). Terbiasa mengerjakan proyek web, Android, hingga dukungan IT dari nol sampai jalan.</p>
+        <div class="cta-row">
+          <a href="#work" class="btn primary">Lihat proyek</a>
+          <a href="#contact" class="btn ghost">Hubungi saya</a>
         </div>
       </div>
-    </nav>
-    <!-- end Navbar -->
-    <!-- start Jumbotron -->
-    <section class="jumbotron text-center">
-      <img src="img/Foto.png" alt="Adi Cahyono" width="200" class="rounded-circle img-thumbnail" />
-      <h1 class="display-4">ADI CAHYONO</h1>
-      <p class="lead">App Tester | Junior Web Developer | Beginner Android Developer | IT Support</p>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path
-          fill="#ffffff"
-          fill-opacity="1"
-          d="M0,128L0,256L36.9,256L36.9,224L73.8,224L73.8,288L110.8,288L110.8,96L147.7,96L147.7,160L184.6,160L184.6,0L221.5,0L221.5,64L258.5,64L258.5,256L295.4,256L295.4,64L332.3,64L332.3,288L369.2,288L369.2,160L406.2,160L406.2,192L443.1,192L443.1,288L480,288L480,160L516.9,160L516.9,64L553.8,64L553.8,160L590.8,160L590.8,320L627.7,320L627.7,256L664.6,256L664.6,192L701.5,192L701.5,64L738.5,64L738.5,96L775.4,96L775.4,64L812.3,64L812.3,64L849.2,64L849.2,0L886.2,0L886.2,320L923.1,320L923.1,320L960,320L960,192L996.9,192L996.9,256L1033.8,256L1033.8,64L1070.8,64L1070.8,256L1107.7,256L1107.7,64L1144.6,64L1144.6,224L1181.5,224L1181.5,64L1218.5,64L1218.5,320L1255.4,320L1255.4,96L1292.3,96L1292.3,160L1329.2,160L1329.2,256L1366.2,256L1366.2,64L1403.1,64L1403.1,224L1440,224L1440,320L1403.1,320L1403.1,320L1366.2,320L1366.2,320L1329.2,320L1329.2,320L1292.3,320L1292.3,320L1255.4,320L1255.4,320L1218.5,320L1218.5,320L1181.5,320L1181.5,320L1144.6,320L1144.6,320L1107.7,320L1107.7,320L1070.8,320L1070.8,320L1033.8,320L1033.8,320L996.9,320L996.9,320L960,320L960,320L923.1,320L923.1,320L886.2,320L886.2,320L849.2,320L849.2,320L812.3,320L812.3,320L775.4,320L775.4,320L738.5,320L738.5,320L701.5,320L701.5,320L664.6,320L664.6,320L627.7,320L627.7,320L590.8,320L590.8,320L553.8,320L553.8,320L516.9,320L516.9,320L480,320L480,320L443.1,320L443.1,320L406.2,320L406.2,320L369.2,320L369.2,320L332.3,320L332.3,320L295.4,320L295.4,320L258.5,320L258.5,320L221.5,320L221.5,320L184.6,320L184.6,320L147.7,320L147.7,320L110.8,320L110.8,320L73.8,320L73.8,320L36.9,320L36.9,320L0,320L0,320Z"
-        ></path>
-      </svg>
-    </section>
-    <!-- end Jumbotron -->
-    <!-- start About -->
-    <section id="about">
-      <div class="container">
-        <div class="row text-center mb-3">
-          <div class="col">
-            <h2>About Me</h2>
-          </div>
+
+      <div class="terminal" role="img" aria-label="Kartu ringkasan profil bergaya terminal">
+        <div class="term-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="term-title">whoami.sh</span>
         </div>
-        <div class="row justify-content-center fs-5 text-center">
-          <div class="col-md-5">
-            <p style="text-align: justify">
-              My name is Adi Cahyono. I was born in Samarinda, May 9, 1999. I have Hobbies playing online games, football, and basketball. I am an applied bachelor of information technology and a certified junior web developer. I graduated
-              with the title "Magna Cumlaude" with a GPA of 3.86 in the multimedia informatics engineering study program.
-            </p>
-          </div>
-          <div class="col-md-5">
-            <p style="text-align: justify">
-              Professions on several projects that I have worked on include Web designer, Frontend Web Developer, Fullstack Web Developer, and Fullstack Android Developer. I have an interest in working as a Fullstack Web Developer or as IT
-              support because I think it's a very challenging and profitable job. With a good educational background and experience in several projects, I hope I can be the right candidate you are looking for.
-            </p>
-          </div>
-        </div>
-        <div class="row text-center mb-3">
-          <div class="col">
-            <h2>Skill and Abilities</h2>
-          </div>
-        </div>
-        <div class="row justify-content-center fs-5 text-center">
-          <div class="col-md-10">
-            <img src="img/html.png" alt="" />
-            <img src="img/css.png" alt="" />
-            <img src="img/php-code.png" alt="" />
-            <img src="img/js.png" alt="" />
-            <img src="img/mysql.png" alt="" />
-            <img src="img/c.png" alt="" />
-            <img src="img/java.png" alt="" />
-            <img src="img/python.png" alt="" />
-            <img src="img/cdr.png" alt="" />
-            <img src="img/word.png" alt="" />
-            <img src="img/excel.png" alt="" />
-            <img src="img/powerpoint.png" alt="" />
-            <img src="img/networking.png" alt="" />
-            <img src="img/troubleshooting.png" alt="" />
-            <img src="img/laptop.png" alt="" /><br />
-          </div>
-        </div>
-      </div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path
-          fill="#04db5e"
-          fill-opacity="1"
-          d="M0,224L0,0L36.9,0L36.9,224L73.8,224L73.8,128L110.8,128L110.8,96L147.7,96L147.7,160L184.6,160L184.6,128L221.5,128L221.5,96L258.5,96L258.5,128L295.4,128L295.4,128L332.3,128L332.3,288L369.2,288L369.2,0L406.2,0L406.2,32L443.1,32L443.1,96L480,96L480,64L516.9,64L516.9,64L553.8,64L553.8,64L590.8,64L590.8,224L627.7,224L627.7,192L664.6,192L664.6,64L701.5,64L701.5,192L738.5,192L738.5,64L775.4,64L775.4,128L812.3,128L812.3,256L849.2,256L849.2,256L886.2,256L886.2,224L923.1,224L923.1,160L960,160L960,256L996.9,256L996.9,96L1033.8,96L1033.8,96L1070.8,96L1070.8,224L1107.7,224L1107.7,32L1144.6,32L1144.6,64L1181.5,64L1181.5,288L1218.5,288L1218.5,0L1255.4,0L1255.4,224L1292.3,224L1292.3,96L1329.2,96L1329.2,192L1366.2,192L1366.2,224L1403.1,224L1403.1,96L1440,96L1440,320L1403.1,320L1403.1,320L1366.2,320L1366.2,320L1329.2,320L1329.2,320L1292.3,320L1292.3,320L1255.4,320L1255.4,320L1218.5,320L1218.5,320L1181.5,320L1181.5,320L1144.6,320L1144.6,320L1107.7,320L1107.7,320L1070.8,320L1070.8,320L1033.8,320L1033.8,320L996.9,320L996.9,320L960,320L960,320L923.1,320L923.1,320L886.2,320L886.2,320L849.2,320L849.2,320L812.3,320L812.3,320L775.4,320L775.4,320L738.5,320L738.5,320L701.5,320L701.5,320L664.6,320L664.6,320L627.7,320L627.7,320L590.8,320L590.8,320L553.8,320L553.8,320L516.9,320L516.9,320L480,320L480,320L443.1,320L443.1,320L406.2,320L406.2,320L369.2,320L369.2,320L332.3,320L332.3,320L295.4,320L295.4,320L258.5,320L258.5,320L221.5,320L221.5,320L184.6,320L184.6,320L147.7,320L147.7,320L110.8,320L110.8,320L73.8,320L73.8,320L36.9,320L36.9,320L0,320L0,320Z"
-        ></path>
-      </svg>
-    </section>
-    <!-- end About -->
-    <!-- start Project -->
-    <section id="projects">
-      <!--image card layout start-->
-      <div class="container2">
-        <!--image row start-->
-        <div class="row text-center mb-3">
-          <div class="col">
-            <h2>My Projects</h2>
-          </div>
-        </div>
-        <div class="row">
-          <!--image card start-->
-          <div class="image">
-            <img src="img/project1.png" alt="" />
-            <div class="details">
-              <h2>Your <span>Title</span></h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div class="more">
-                <a href="#" class="read-more">Read <span>More</span></a>
-                <div class="icon-links">
-                  <a href="#"><i class="fas fa-heart"></i></a>
-                  <a href="#"><i class="fas fa-eye"></i></a>
-                  <a href="#"><i class="fas fa-paperclip"></i></a>
-                </div>
-              </div>
+        <div class="term-body">
+          <div><span class="prompt">$</span> whoami</div>
+          <div class="out">adi_cahyono</div>
+          <div><span class="prompt">$</span> cat education.txt</div>
+          <div class="out">D-IV Informatika Multimedia<br>Magna Cumlaude · IPK 3.86</div>
+          <div><span class="prompt">$</span> cat focus.txt</div>
+          <div class="out">Web · Android · IT Support</div>
+          <div class="photo-row">
+            <img class="avatar" src="img/Foto.png" alt="Foto Adi Cahyono" onerror="this.style.display='none'">
+            <div>
+              <div class="stat"><b>Lahir</b> 9 Mei 1999</div>
+              <div class="stat"><b>Berbasis di</b> Samarinda, ID</div>
             </div>
-          </div>
-          <!--image card end-->
-          <!--image card start-->
-          <div class="image">
-            <img src="img/project2.png" alt="" />
-            <div class="details">
-              <h2>Your <span>Title</span></h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div class="more">
-                <a href="#" class="read-more">Read <span>More</span></a>
-                <div class="icon-links">
-                  <a href="#"><i class="fas fa-heart"></i></a>
-                  <a href="#"><i class="fas fa-eye"></i></a>
-                  <a href="#"><i class="fas fa-paperclip"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--image card end-->
-          <!--image card start-->
-          <div class="image">
-            <img src="img/project3.png" alt="" />
-            <div class="details">
-              <h2>Your <span>Title</span></h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div class="more">
-                <a href="#" class="read-more">Read <span>More</span></a>
-                <div class="icon-links">
-                  <a href="#"><i class="fas fa-heart"></i></a>
-                  <a href="#"><i class="fas fa-eye"></i></a>
-                  <a href="#"><i class="fas fa-paperclip"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--image card end-->
-        </div>
-        <!--image row end-->
-        <!--image row start-->
-        <div class="row">
-          <!--image card start-->
-          <div class="image">
-            <img src="img/project4.png" alt="" />
-            <div class="details">
-              <h2>Your <span>Title</span></h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div class="more">
-                <a href="#" class="read-more">Read <span>More</span></a>
-                <div class="icon-links">
-                  <a href="#"><i class="fas fa-heart"></i></a>
-                  <a href="#"><i class="fas fa-eye"></i></a>
-                  <a href="#"><i class="fas fa-paperclip"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--image card end-->
-          <!--image card start-->
-          <div class="image">
-            <img src="img/project5.png" alt="" />
-            <div class="details">
-              <h2>Your <span>Title</span></h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div class="more">
-                <a href="#" class="read-more">Read <span>More</span></a>
-                <div class="icon-links">
-                  <a href="#"><i class="fas fa-heart"></i></a>
-                  <a href="#"><i class="fas fa-eye"></i></a>
-                  <a href="#"><i class="fas fa-paperclip"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--image card end-->
-          <!--image card start-->
-          <div class="image">
-            <img src="img/project6.png" alt="" />
-            <div class="details">
-              <h2>Your <span>Title</span></h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <div class="more">
-                <a href="#" class="read-more">Read <span>More</span></a>
-                <div class="icon-links">
-                  <a href="#"><i class="fas fa-heart"></i></a>
-                  <a href="#"><i class="fas fa-eye"></i></a>
-                  <a href="#"><i class="fas fa-paperclip"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--image card end-->
-        </div>
-        <!--image row end-->
-      </div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path
-          fill="#ffffff"
-          fill-opacity="1"
-          d="M0,32L0,32L36.9,32L36.9,192L73.8,192L73.8,288L110.8,288L110.8,160L147.7,160L147.7,32L184.6,32L184.6,96L221.5,96L221.5,288L258.5,288L258.5,128L295.4,128L295.4,224L332.3,224L332.3,0L369.2,0L369.2,128L406.2,128L406.2,288L443.1,288L443.1,32L480,32L480,224L516.9,224L516.9,256L553.8,256L553.8,96L590.8,96L590.8,224L627.7,224L627.7,96L664.6,96L664.6,0L701.5,0L701.5,128L738.5,128L738.5,288L775.4,288L775.4,160L812.3,160L812.3,160L849.2,160L849.2,96L886.2,96L886.2,32L923.1,32L923.1,96L960,96L960,160L996.9,160L996.9,64L1033.8,64L1033.8,288L1070.8,288L1070.8,256L1107.7,256L1107.7,32L1144.6,32L1144.6,32L1181.5,32L1181.5,96L1218.5,96L1218.5,288L1255.4,288L1255.4,0L1292.3,0L1292.3,64L1329.2,64L1329.2,96L1366.2,96L1366.2,224L1403.1,224L1403.1,32L1440,32L1440,320L1403.1,320L1403.1,320L1366.2,320L1366.2,320L1329.2,320L1329.2,320L1292.3,320L1292.3,320L1255.4,320L1255.4,320L1218.5,320L1218.5,320L1181.5,320L1181.5,320L1144.6,320L1144.6,320L1107.7,320L1107.7,320L1070.8,320L1070.8,320L1033.8,320L1033.8,320L996.9,320L996.9,320L960,320L960,320L923.1,320L923.1,320L886.2,320L886.2,320L849.2,320L849.2,320L812.3,320L812.3,320L775.4,320L775.4,320L738.5,320L738.5,320L701.5,320L701.5,320L664.6,320L664.6,320L627.7,320L627.7,320L590.8,320L590.8,320L553.8,320L553.8,320L516.9,320L516.9,320L480,320L480,320L443.1,320L443.1,320L406.2,320L406.2,320L369.2,320L369.2,320L332.3,320L332.3,320L295.4,320L295.4,320L258.5,320L258.5,320L221.5,320L221.5,320L184.6,320L184.6,320L147.7,320L147.7,320L110.8,320L110.8,320L73.8,320L73.8,320L36.9,320L36.9,320L0,320L0,320Z"
-        ></path>
-      </svg>
-    </section>
-    <!-- end Project -->
-    <!-- start contact -->
-    <section id="contact">
-      <div class="container">
-        <div class="row text-center mb-3">
-          <div class="col">
-            <h2>Contact Me</h2>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <form>
-              <div class="mb-3">
-                <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" />
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" />
-              </div>
-              <div class="mb-3">
-                <label for="pesan" class="form-label">Pesan</label>
-                <textarea class="form-control" id="pesan" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Kirim</button>
-            </form>
           </div>
         </div>
       </div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path
-          fill="#054047"
-          fill-opacity="1"
-          d="M0,320L0,288L36.9,288L36.9,192L73.8,192L73.8,160L110.8,160L110.8,288L147.7,288L147.7,160L184.6,160L184.6,256L221.5,256L221.5,224L258.5,224L258.5,160L295.4,160L295.4,128L332.3,128L332.3,224L369.2,224L369.2,224L406.2,224L406.2,96L443.1,96L443.1,160L480,160L480,96L516.9,96L516.9,160L553.8,160L553.8,64L590.8,64L590.8,64L627.7,64L627.7,32L664.6,32L664.6,64L701.5,64L701.5,96L738.5,96L738.5,128L775.4,128L775.4,288L812.3,288L812.3,224L849.2,224L849.2,192L886.2,192L886.2,256L923.1,256L923.1,192L960,192L960,64L996.9,64L996.9,224L1033.8,224L1033.8,128L1070.8,128L1070.8,128L1107.7,128L1107.7,128L1144.6,128L1144.6,224L1181.5,224L1181.5,192L1218.5,192L1218.5,192L1255.4,192L1255.4,128L1292.3,128L1292.3,160L1329.2,160L1329.2,96L1366.2,96L1366.2,160L1403.1,160L1403.1,224L1440,224L1440,320L1403.1,320L1403.1,320L1366.2,320L1366.2,320L1329.2,320L1329.2,320L1292.3,320L1292.3,320L1255.4,320L1255.4,320L1218.5,320L1218.5,320L1181.5,320L1181.5,320L1144.6,320L1144.6,320L1107.7,320L1107.7,320L1070.8,320L1070.8,320L1033.8,320L1033.8,320L996.9,320L996.9,320L960,320L960,320L923.1,320L923.1,320L886.2,320L886.2,320L849.2,320L849.2,320L812.3,320L812.3,320L775.4,320L775.4,320L738.5,320L738.5,320L701.5,320L701.5,320L664.6,320L664.6,320L627.7,320L627.7,320L590.8,320L590.8,320L553.8,320L553.8,320L516.9,320L516.9,320L480,320L480,320L443.1,320L443.1,320L406.2,320L406.2,320L369.2,320L369.2,320L332.3,320L332.3,320L295.4,320L295.4,320L258.5,320L258.5,320L221.5,320L221.5,320L184.6,320L184.6,320L147.7,320L147.7,320L110.8,320L110.8,320L73.8,320L73.8,320L36.9,320L36.9,320L0,320L0,320Z"
-        ></path>
-      </svg>
-    </section>
-    <!-- end contact -->
-    <!-- footer -->
-    <footer style="background-color: #054047" class="text-white text-center pb-5">
-      <p>Created With <i class="bi bi-heart-fill text-danger"></i> By <a href="https://www.instagram.com/ady_cahyono007/" class="text-white fw-bold">Adi Cahyono</a></p>
-    </footer>
-    <!-- footer -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-  </body>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <div class="head">
+          <div class="tag">01</div>
+          <h2>Tentang saya</h2>
+        </div>
+        <p>Saya lulus sebagai Sarjana Terapan Teknologi Informasi dari program studi Teknik Informatika Multimedia dengan predikat Magna Cumlaude dan IPK 3,86. Di luar kuliah, saya mengisi waktu dengan game online, sepak bola, dan basket.</p>
+        <p>Saya sudah mengerjakan berbagai peran di proyek nyata — web designer, frontend developer, fullstack web developer, hingga fullstack Android developer. Saat ini saya tertarik menekuni jalur Fullstack Web Developer atau IT Support, dua bidang yang menurut saya menantang sekaligus punya prospek jelas.</p>
+      </div>
+      <div>
+        <div class="stat-card">
+          <div class="num">3.86</div>
+          <div class="label">IPK kelulusan — predikat Magna Cumlaude</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="repoCount">11+</div>
+          <div class="label">Repository publik di GitHub</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">4</div>
+          <div class="label">Peran proyek: Web Design, Frontend, Fullstack Web, Fullstack Android</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="head">
+        <div class="tag">02</div>
+        <h2>Skill &amp; peralatan</h2>
+      </div>
+      <div class="skill-groups">
+        <div class="skill-card">
+          <h3>Bahasa &amp; web</h3>
+          <div class="chip-row">
+            <span class="chip"><img src="img/html.png" alt="" onerror="this.remove()">HTML</span>
+            <span class="chip"><img src="img/css.png" alt="" onerror="this.remove()">CSS</span>
+            <span class="chip"><img src="img/js.png" alt="" onerror="this.remove()">JavaScript</span>
+            <span class="chip"><img src="img/php-code.png" alt="" onerror="this.remove()">PHP</span>
+            <span class="chip"><img src="img/mysql.png" alt="" onerror="this.remove()">MySQL</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Bahasa pemrograman</h3>
+          <div class="chip-row">
+            <span class="chip"><img src="img/java.png" alt="" onerror="this.remove()">Java</span>
+            <span class="chip"><img src="img/python.png" alt="" onerror="this.remove()">Python</span>
+            <span class="chip"><img src="img/c.png" alt="" onerror="this.remove()">C</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Produktivitas &amp; desain</h3>
+          <div class="chip-row">
+            <span class="chip"><img src="img/word.png" alt="" onerror="this.remove()">Word</span>
+            <span class="chip"><img src="img/excel.png" alt="" onerror="this.remove()">Excel</span>
+            <span class="chip"><img src="img/powerpoint.png" alt="" onerror="this.remove()">PowerPoint</span>
+            <span class="chip"><img src="img/cdr.png" alt="" onerror="this.remove()">CorelDRAW</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>IT support</h3>
+          <div class="chip-row">
+            <span class="chip"><img src="img/networking.png" alt="" onerror="this.remove()">Networking</span>
+            <span class="chip"><img src="img/troubleshooting.png" alt="" onerror="this.remove()">Troubleshooting</span>
+            <span class="chip"><img src="img/laptop.png" alt="" onerror="this.remove()">Hardware</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="work">
+    <div class="wrap">
+      <div class="head">
+        <div class="tag">03</div>
+        <h2>Proyek</h2>
+      </div>
+      <div class="filter-row" id="filterRow" aria-label="Filter proyek berdasarkan bahasa"></div>
+      <div id="projStatus">Memuat proyek dari GitHub…</div>
+      <div class="proj-grid" id="projGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="head">
+        <div class="tag">04</div>
+        <h2>Hubungi saya</h2>
+      </div>
+      <p class="muted" style="max-width:56ch; margin:-10px 0 28px;">Terbuka untuk peluang kerja, kolaborasi proyek, atau sekadar ngobrol soal teknologi. Silakan mampir lewat salah satu kanal berikut.</p>
+      <div class="contact-grid">
+        <a class="contact-card" href="https://github.com/adycahyono007" target="_blank" rel="noopener">
+          <span class="clabel">GitHub</span>
+          <span class="cval">@adycahyono007</span>
+        </a>
+        <a class="contact-card" href="https://www.instagram.com/ady_cahyono007/" target="_blank" rel="noopener">
+          <span class="clabel">Instagram</span>
+          <span class="cval">@ady_cahyono007</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="wrap">Dibuat dengan ♥ oleh <a href="https://www.instagram.com/ady_cahyono007/" target="_blank" rel="noopener">Adi Cahyono</a> · <span id="year"></span></p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- mobile nav ---------- */
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); });
+  });
+
+  /* ---------- active section highlight ---------- */
+  var navA = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+  var sections = ['about','skills','work','contact'].map(function(id){ return document.getElementById(id); });
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          navA.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#'+e.target.id); });
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    sections.forEach(function(s){ if(s) obs.observe(s); });
+  }
+
+  /* ---------- hero role typewriter ---------- */
+  var roles = ['Fullstack Web Developer', 'Fullstack Android Developer', 'App Tester', 'IT Support'];
+  var roleEl = document.getElementById('roleText');
+  var ri = 0, ci = 0, deleting = false;
+  function tick(){
+    var word = roles[ri];
+    if(!deleting){
+      ci++;
+      roleEl.textContent = word.slice(0, ci);
+      if(ci === word.length){ deleting = true; setTimeout(tick, 1400); return; }
+    } else {
+      ci--;
+      roleEl.textContent = word.slice(0, ci);
+      if(ci === 0){ deleting = false; ri = (ri+1) % roles.length; }
+    }
+    setTimeout(tick, deleting ? 35 : 65);
+  }
+  tick();
+
+  /* ---------- GitHub projects (live + fallback) ---------- */
+  var GH_USER = 'adycahyono007';
+  var FALLBACK = [
+    {name:'calculator-metode-KNN-dinamis', description:'Kalkulator metode K-Nearest Neighbor (K-NN) dinamis berbasis JavaScript.', language:'JavaScript', html_url:'https://github.com/adycahyono007/calculator-metode-KNN-dinamis'},
+    {name:'Tv-Shows-Movies-Catalog', description:'Katalog acara TV dan film, dibangun dengan Java di Android Studio.', language:'Java', html_url:'https://github.com/adycahyono007/Tv-Shows-Movies-Catalog'},
+    {name:'Katalog-Android-2019', description:'Kumpulan aplikasi Android terbaik tahun 2019, dibangun dengan Java.', language:'Java', html_url:'https://github.com/adycahyono007/Katalog-Android-2019'},
+    {name:'Employee-information-system', description:'Sistem informasi kepegawaian berbasis web.', language:'PHP', html_url:'https://github.com/adycahyono007/Employee-information-system'},
+    {name:'psb-online', description:'Tugas sertifikasi junior web developer VSGA.', language:'PHP', html_url:'https://github.com/adycahyono007/psb-online'},
+    {name:'sipus-vsga', description:'Sistem informasi perpustakaan.', language:'JavaScript', html_url:'https://github.com/adycahyono007/sipus-vsga'},
+    {name:'Sertikom-Laravel-and-Postman', description:'Tugas sertifikasi kompetensi menggunakan Laravel dan Postman.', language:'PHP', html_url:'https://github.com/adycahyono007/Sertikom-Laravel-and-Postman'},
+    {name:'LRF-Filter-Video-Matlab', description:'Filter video LRF yang dibangun dengan MATLAB.', language:'MATLAB', html_url:'https://github.com/adycahyono007/LRF-Filter-Video-Matlab'},
+    {name:'Self-Organizing-Map', description:'Penyelesaian masalah menggunakan metode Self Organizing Map (SOM) dengan Python.', language:'Python', html_url:'https://github.com/adycahyono007/Self-Organizing-Map'},
+    {name:'FuzzyC-means', description:'Penyelesaian masalah menggunakan metode Fuzzy C-Means dengan Python.', language:'Python', html_url:'https://github.com/adycahyono007/FuzzyC-means'},
+    {name:'K-MeanClustering', description:'Penyelesaian masalah sederhana menggunakan metode K-Mean Clustering dengan Python.', language:'Python', html_url:'https://github.com/adycahyono007/K-MeanClustering'}
+  ];
+  var LANG_COLORS = {
+    JavaScript:'#f1e05a', Java:'#b07219', PHP:'#4f5d95', Python:'#3572a5',
+    MATLAB:'#e16737', HTML:'#e34c26', CSS:'#563d7c', C:'#555555', TypeScript:'#3178c6'
+  };
+
+  var projGrid = document.getElementById('projGrid');
+  var projStatus = document.getElementById('projStatus');
+  var filterRow = document.getElementById('filterRow');
+  var repoCountEl = document.getElementById('repoCount');
+  var currentFilter = 'All';
+  var allRepos = [];
+
+  function titleize(name){
+    return name.replace(/[-_]+/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+  }
+
+  function renderFilters(repos){
+    var langs = ['All'];
+    repos.forEach(function(r){ if(r.language && langs.indexOf(r.language) === -1) langs.push(r.language); });
+    filterRow.innerHTML = '';
+    langs.forEach(function(lang){
+      var b = document.createElement('button');
+      b.className = 'filter-btn' + (lang === currentFilter ? ' active' : '');
+      b.type = 'button';
+      b.textContent = lang;
+      b.addEventListener('click', function(){
+        currentFilter = lang;
+        filterRow.querySelectorAll('.filter-btn').forEach(function(el){ el.classList.remove('active'); });
+        b.classList.add('active');
+        renderGrid(repos);
+      });
+      filterRow.appendChild(b);
+    });
+  }
+
+  function renderGrid(repos){
+    var list = currentFilter === 'All' ? repos : repos.filter(function(r){ return r.language === currentFilter; });
+    projGrid.innerHTML = '';
+    if(list.length === 0){
+      projGrid.innerHTML = '<p class="muted">Tidak ada proyek untuk filter ini.</p>';
+      return;
+    }
+    list.forEach(function(r){
+      var card = document.createElement('a');
+      card.className = 'proj-card';
+      card.href = r.html_url;
+      card.target = '_blank';
+      card.rel = 'noopener';
+      var color = LANG_COLORS[r.language] || '#8891a5';
+      card.innerHTML =
+        '<div class="proj-top"><span class="proj-name">' + titleize(r.name) + '</span><span class="proj-arrow">↗</span></div>' +
+        '<div class="proj-desc">' + (r.description ? r.description : 'Tidak ada deskripsi.') + '</div>' +
+        '<div class="proj-meta">' +
+          (r.language ? '<span><span class="lang-dot" style="background:' + color + '"></span>' + r.language + '</span>' : '<span>—</span>') +
+          (typeof r.stargazers_count === 'number' ? '<span>★ ' + r.stargazers_count + '</span>' : '') +
+        '</div>';
+      projGrid.appendChild(card);
+    });
+  }
+
+  function useRepos(repos){
+    allRepos = repos;
+    repoCountEl.textContent = repos.length + '+';
+    projStatus.style.display = 'none';
+    renderFilters(repos);
+    renderGrid(repos);
+  }
+
+  fetch('https://api.github.com/users/' + GH_USER + '/repos?sort=updated&per_page=100')
+    .then(function(res){ if(!res.ok) throw new Error('GitHub API error'); return res.json(); })
+    .then(function(data){
+      var repos = data
+        .filter(function(r){ return !r.fork && r.name.toLowerCase() !== (GH_USER + '.github.io'); })
+        .map(function(r){
+          return {
+            name:r.name, description:r.description, language:r.language,
+            html_url:r.html_url, stargazers_count:r.stargazers_count
+          };
+        });
+      if(repos.length === 0) throw new Error('empty');
+      useRepos(repos);
+    })
+    .catch(function(){
+      useRepos(FALLBACK);
+    });
+
+})();
+</script>
+</body>
 </html>
