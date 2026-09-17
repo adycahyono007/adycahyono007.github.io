@@ -235,41 +235,26 @@
   .filter-chip.active{background:var(--cyan);color:#04120F;border-color:var(--cyan);}
   .filter-chip.active .lang-dot{box-shadow:0 0 0 2px #04120F55;}
 
-  .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+  .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
   .project-card{
-    border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;
+    border:1px solid var(--border);border-radius:10px;background:var(--surface);
+    padding:22px 22px 20px;display:flex;flex-direction:column;gap:12px;text-decoration:none;
     transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
-    display:flex;flex-direction:column;opacity:0;transform:translateY(14px);
+    opacity:0;transform:translateY(14px);
   }
   .project-card.in{opacity:1;transform:translateY(0);transition:opacity .5s ease, transform .5s ease, border-color .2s ease, box-shadow .2s ease;}
-  .project-card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.35);}
-  .project-thumb{aspect-ratio:16/10;background:var(--surface-2);overflow:hidden;position:relative;display:block;}
-  .project-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;}
-  .project-card:hover .project-thumb img{transform:scale(1.05);}
-  .project-thumb.thumb-fallback{display:flex;align-items:center;justify-content:center;}
-  .project-thumb.thumb-fallback svg{width:34px;height:34px;color:var(--border);}
-  .project-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;}
-  .project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
-  .project-body h3{font-family:var(--font-head);font-size:1.05rem;margin:0;word-break:break-word;}
-  .badge-fork,.badge-archived{
-    flex:none;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);
-    border:1px solid var(--border);border-radius:4px;padding:2px 7px;white-space:nowrap;
-  }
-  .project-body p{color:var(--text-dim);font-size:.88rem;margin:0 0 14px;flex:1;}
-  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;}
-  .tag{font-family:var(--font-mono);font-size:.68rem;color:var(--amber);background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);border-radius:4px;padding:2px 8px;}
-  .project-meta{display:flex;flex-wrap:wrap;gap:12px;font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);margin-bottom:14px;}
-  .meta-item{display:inline-flex;align-items:center;gap:5px;}
+  .project-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.35);}
+  .project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+  .project-card h3{font-family:var(--font-head);font-size:1.05rem;margin:0;word-break:break-word;}
+  .project-arrow{flex:none;color:var(--text-dim);font-size:1.1rem;line-height:1;transition:color .2s ease, transform .2s ease;}
+  .project-card:hover .project-arrow{color:var(--cyan);transform:translate(2px,-2px);}
+  .project-card p{color:var(--text-dim);font-size:.88rem;margin:0;min-height:2.6em;}
+  .project-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-family:var(--font-mono);font-size:.76rem;color:var(--text-dim);}
+  .meta-item{display:inline-flex;align-items:center;gap:6px;}
   .lang-dot{width:9px;height:9px;border-radius:50%;flex:none;}
-  .project-links{display:flex;gap:16px;margin-top:auto;}
-  .project-link{font-family:var(--font-mono);font-size:.78rem;color:var(--cyan);text-decoration:none;}
-  .project-link:hover{text-decoration:underline;}
 
-  .skeleton-card{border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;}
-  .skeleton-thumb,.skeleton-line{background:linear-gradient(90deg,var(--surface-2) 25%,#223049 37%,var(--surface-2) 63%);background-size:400% 100%;animation:shimmer 1.6s ease infinite;}
-  .skeleton-thumb{aspect-ratio:16/10;}
-  .skeleton-body{padding:18px 20px 22px;}
-  .skeleton-line{height:12px;border-radius:4px;margin-bottom:10px;}
+  .skeleton-card{border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:22px;}
+  .skeleton-line{background:linear-gradient(90deg,var(--surface-2) 25%,#223049 37%,var(--surface-2) 63%);background-size:400% 100%;animation:shimmer 1.6s ease infinite;height:12px;border-radius:4px;margin-bottom:12px;}
   .skeleton-line.w60{width:60%;}
   .skeleton-line.w90{width:90%;}
   .skeleton-line.w40{width:40%;margin-bottom:0;}
@@ -372,7 +357,7 @@
 
     <div class="hero-portrait reveal-on-load">
       <div class="portrait-frame">
-        <img src="img/Profil.jpg" alt="Adi Cahyono">
+        <img src="img/Foto.png" alt="Adi Cahyono">
         <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
         <span class="scan"></span>
       </div>
@@ -450,9 +435,9 @@
     </div>
 
     <div class="project-grid" id="projectGrid">
-      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div>
     </div>
   </div>
 </section>
@@ -567,53 +552,24 @@
     const stats   = document.getElementById('projectsStats');
     const filters = document.getElementById('projectsFilters');
 
-    const iconSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 18 6-12M6 8l-4 4 4 4M18 8l4 4-4 4"/></svg>`;
-
-    function timeAgo(dateStr){
-      const diff = Date.now() - new Date(dateStr).getTime();
-      const days = Math.floor(diff / 86400000);
-      if (days < 1) return 'today';
-      if (days === 1) return '1 day ago';
-      if (days < 30) return `${days} days ago`;
-      const months = Math.floor(days / 30);
-      if (months < 12) return `${months} mo ago`;
-      const years = Math.floor(months / 12);
-      return `${years} yr ago`;
-    }
-
     function niceName(name){
       return name.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     }
 
     function cardHTML(repo){
-      const desc = repo.description ? repo.description : 'No description provided yet — check the source for details.';
-      const topics = (repo.topics || []).slice(0, 4);
-      const ogImg = `https://opengraph.githubassets.com/1/${repo.full_name}`;
+      const desc = repo.description ? repo.description : 'No description provided yet.';
       return `
-        <article class="project-card" data-lang="${repo.language || ''}">
-          <a class="project-thumb" href="${repo.html_url}" target="_blank" rel="noopener" aria-label="${repo.name} source">
-            <img src="${ogImg}" alt="${repo.name} preview" loading="lazy"
-                 onerror="this.parentElement.classList.add('thumb-fallback'); this.remove();">
-          </a>
-          <div class="project-body">
-            <div class="project-top">
-              <h3>${niceName(repo.name)}</h3>
-              ${repo.fork ? '<span class="badge-fork">Fork</span>' : ''}
-              ${repo.archived ? '<span class="badge-archived">Archived</span>' : ''}
-            </div>
-            <p>${desc}</p>
-            ${topics.length ? `<div class="tag-row">${topics.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
-            <div class="project-meta">
-              ${repo.language ? `<span class="meta-item"><span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language}</span>` : ''}
-              <span class="meta-item">★ ${repo.stargazers_count}</span>
-              <span class="meta-item">Updated ${timeAgo(repo.pushed_at)}</span>
-            </div>
-            <div class="project-links">
-              <a class="project-link" href="${repo.html_url}" target="_blank" rel="noopener">Source →</a>
-              ${repo.homepage ? `<a class="project-link" href="${repo.homepage}" target="_blank" rel="noopener">Live demo →</a>` : ''}
-            </div>
+        <a class="project-card" data-lang="${repo.language || ''}" href="${repo.html_url}" target="_blank" rel="noopener">
+          <div class="project-top">
+            <h3>${niceName(repo.name)}</h3>
+            <span class="project-arrow">↗</span>
           </div>
-        </article>`;
+          <p>${desc}</p>
+          <div class="project-meta">
+            ${repo.language ? `<span class="meta-item"><span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language}</span>` : '<span class="meta-item">—</span>'}
+            <span class="meta-item">★ ${repo.stargazers_count}</span>
+          </div>
+        </a>`;
     }
 
     function render(repos){
