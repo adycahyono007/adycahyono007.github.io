@@ -221,16 +221,65 @@
   .skill-chip span{font-family:var(--font-mono);font-size:.68rem;color:var(--text-dim);text-align:center;}
 
   /* ---------- projects ---------- */
+  .projects-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin:-16px 0 28px;}
+  .projects-stats{font-family:var(--font-mono);font-size:.78rem;color:var(--text-dim);display:flex;gap:16px;flex-wrap:wrap;}
+  .projects-stats b{color:var(--cyan);font-weight:600;}
+  .filter-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .filter-chip{
+    font-family:var(--font-mono);font-size:.74rem;color:var(--text-dim);
+    background:var(--surface);border:1px solid var(--border);border-radius:20px;
+    padding:6px 14px;cursor:pointer;transition:all .18s ease;display:inline-flex;align-items:center;gap:6px;
+  }
+  .filter-chip .lang-dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .filter-chip:hover{border-color:var(--cyan);color:var(--text);}
+  .filter-chip.active{background:var(--cyan);color:#04120F;border-color:var(--cyan);}
+  .filter-chip.active .lang-dot{box-shadow:0 0 0 2px #04120F55;}
+
   .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
-  .project-card{border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;transition:border-color .2s ease;}
-  .project-card:hover{border-color:var(--cyan);}
-  .project-thumb{aspect-ratio:16/10;background:var(--surface-2);overflow:hidden;}
-  .project-thumb img{width:100%;height:100%;object-fit:cover;}
-  .project-body{padding:18px 20px 22px;}
-  .project-body h3{font-family:var(--font-head);font-size:1.05rem;margin:0 0 8px;}
-  .project-body p{color:var(--text-dim);font-size:.88rem;margin:0 0 14px;}
+  .project-card{
+    border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;
+    transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    display:flex;flex-direction:column;opacity:0;transform:translateY(14px);
+  }
+  .project-card.in{opacity:1;transform:translateY(0);transition:opacity .5s ease, transform .5s ease, border-color .2s ease, box-shadow .2s ease;}
+  .project-card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.35);}
+  .project-thumb{aspect-ratio:16/10;background:var(--surface-2);overflow:hidden;position:relative;display:block;}
+  .project-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;}
+  .project-card:hover .project-thumb img{transform:scale(1.05);}
+  .project-thumb.thumb-fallback{display:flex;align-items:center;justify-content:center;}
+  .project-thumb.thumb-fallback svg{width:34px;height:34px;color:var(--border);}
+  .project-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1;}
+  .project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+  .project-body h3{font-family:var(--font-head);font-size:1.05rem;margin:0;word-break:break-word;}
+  .badge-fork,.badge-archived{
+    flex:none;font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);
+    border:1px solid var(--border);border-radius:4px;padding:2px 7px;white-space:nowrap;
+  }
+  .project-body p{color:var(--text-dim);font-size:.88rem;margin:0 0 14px;flex:1;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;}
+  .tag{font-family:var(--font-mono);font-size:.68rem;color:var(--amber);background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);border-radius:4px;padding:2px 8px;}
+  .project-meta{display:flex;flex-wrap:wrap;gap:12px;font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);margin-bottom:14px;}
+  .meta-item{display:inline-flex;align-items:center;gap:5px;}
+  .lang-dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .project-links{display:flex;gap:16px;margin-top:auto;}
   .project-link{font-family:var(--font-mono);font-size:.78rem;color:var(--cyan);text-decoration:none;}
   .project-link:hover{text-decoration:underline;}
+
+  .skeleton-card{border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;}
+  .skeleton-thumb,.skeleton-line{background:linear-gradient(90deg,var(--surface-2) 25%,#223049 37%,var(--surface-2) 63%);background-size:400% 100%;animation:shimmer 1.6s ease infinite;}
+  .skeleton-thumb{aspect-ratio:16/10;}
+  .skeleton-body{padding:18px 20px 22px;}
+  .skeleton-line{height:12px;border-radius:4px;margin-bottom:10px;}
+  .skeleton-line.w60{width:60%;}
+  .skeleton-line.w90{width:90%;}
+  .skeleton-line.w40{width:40%;margin-bottom:0;}
+  @keyframes shimmer{0%{background-position:100% 0;}100%{background-position:-100% 0;}}
+
+  .projects-note{
+    font-family:var(--font-mono);font-size:.82rem;color:var(--text-dim);
+    border:1px dashed var(--border);border-radius:8px;padding:18px 20px;grid-column:1/-1;text-align:center;
+  }
+  .projects-note a{color:var(--cyan);}
 
   /* ---------- contact ---------- */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -394,13 +443,16 @@
   <div class="wrap">
     <p class="eyebrow">03 — Projects</p>
     <h2 class="section-title">Recent builds</h2>
-    <div class="project-grid">
-      <div class="project-card"><div class="project-thumb"><img src="img/project1.png" alt="Project 1"></div><div class="project-body"><h3>Project title</h3><p>Add a short description of this project here — what it does and what you used to build it.</p><a class="project-link" href="#">View project →</a></div></div>
-      <div class="project-card"><div class="project-thumb"><img src="img/project2.png" alt="Project 2"></div><div class="project-body"><h3>Project title</h3><p>Add a short description of this project here — what it does and what you used to build it.</p><a class="project-link" href="#">View project →</a></div></div>
-      <div class="project-card"><div class="project-thumb"><img src="img/project3.png" alt="Project 3"></div><div class="project-body"><h3>Project title</h3><p>Add a short description of this project here — what it does and what you used to build it.</p><a class="project-link" href="#">View project →</a></div></div>
-      <div class="project-card"><div class="project-thumb"><img src="img/project4.png" alt="Project 4"></div><div class="project-body"><h3>Project title</h3><p>Add a short description of this project here — what it does and what you used to build it.</p><a class="project-link" href="#">View project →</a></div></div>
-      <div class="project-card"><div class="project-thumb"><img src="img/project5.png" alt="Project 5"></div><div class="project-body"><h3>Project title</h3><p>Add a short description of this project here — what it does and what you used to build it.</p><a class="project-link" href="#">View project →</a></div></div>
-      <div class="project-card"><div class="project-thumb"><img src="img/project6.png" alt="Project 6"></div><div class="project-body"><h3>Project title</h3><p>Add a short description of this project here — what it does and what you used to build it.</p><a class="project-link" href="#">View project →</a></div></div>
+
+    <div class="projects-toolbar">
+      <div class="projects-stats" id="projectsStats"></div>
+      <div class="filter-row" id="projectsFilters"></div>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w90"></div><div class="skeleton-line w40"></div></div></div>
     </div>
   </div>
 </section>
@@ -493,6 +545,159 @@
       }
     }, stepTime);
   }
+</script>
+
+<script>
+  // ---------- dynamic GitHub projects ----------
+  (function(){
+    const GH_USER   = 'adycahyono007';
+    const EXCLUDE   = new Set([`${GH_USER}.github.io`]); // hide the portfolio repo itself
+    const CACHE_KEY = 'gh-projects-cache-v1';
+    const CACHE_TTL = 1000 * 60 * 60; // 1 hour
+
+    const LANG_COLORS = {
+      JavaScript:'#f1e05a', TypeScript:'#3178c6', HTML:'#e34c26', CSS:'#563d7c',
+      PHP:'#4F5D95', Python:'#3572A5', Java:'#b07219', C:'#555555', 'C++':'#f34b7d',
+      'C#':'#178600', Kotlin:'#A97BFF', Dart:'#00B4AB', Ruby:'#701516', Go:'#00ADD8',
+      Shell:'#89e051', Vue:'#41b883', SCSS:'#c6538c', Jupyter:'#DA5B0B', Swift:'#F05138'
+    };
+    const langColor = (l) => LANG_COLORS[l] || '#8C99AF';
+
+    const grid    = document.getElementById('projectGrid');
+    const stats   = document.getElementById('projectsStats');
+    const filters = document.getElementById('projectsFilters');
+
+    const iconSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 18 6-12M6 8l-4 4 4 4M18 8l4 4-4 4"/></svg>`;
+
+    function timeAgo(dateStr){
+      const diff = Date.now() - new Date(dateStr).getTime();
+      const days = Math.floor(diff / 86400000);
+      if (days < 1) return 'today';
+      if (days === 1) return '1 day ago';
+      if (days < 30) return `${days} days ago`;
+      const months = Math.floor(days / 30);
+      if (months < 12) return `${months} mo ago`;
+      const years = Math.floor(months / 12);
+      return `${years} yr ago`;
+    }
+
+    function niceName(name){
+      return name.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function cardHTML(repo){
+      const desc = repo.description ? repo.description : 'No description provided yet — check the source for details.';
+      const topics = (repo.topics || []).slice(0, 4);
+      const ogImg = `https://opengraph.githubassets.com/1/${repo.full_name}`;
+      return `
+        <article class="project-card" data-lang="${repo.language || ''}">
+          <a class="project-thumb" href="${repo.html_url}" target="_blank" rel="noopener" aria-label="${repo.name} source">
+            <img src="${ogImg}" alt="${repo.name} preview" loading="lazy"
+                 onerror="this.parentElement.classList.add('thumb-fallback'); this.remove();">
+          </a>
+          <div class="project-body">
+            <div class="project-top">
+              <h3>${niceName(repo.name)}</h3>
+              ${repo.fork ? '<span class="badge-fork">Fork</span>' : ''}
+              ${repo.archived ? '<span class="badge-archived">Archived</span>' : ''}
+            </div>
+            <p>${desc}</p>
+            ${topics.length ? `<div class="tag-row">${topics.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+            <div class="project-meta">
+              ${repo.language ? `<span class="meta-item"><span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language}</span>` : ''}
+              <span class="meta-item">★ ${repo.stargazers_count}</span>
+              <span class="meta-item">Updated ${timeAgo(repo.pushed_at)}</span>
+            </div>
+            <div class="project-links">
+              <a class="project-link" href="${repo.html_url}" target="_blank" rel="noopener">Source →</a>
+              ${repo.homepage ? `<a class="project-link" href="${repo.homepage}" target="_blank" rel="noopener">Live demo →</a>` : ''}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function render(repos){
+      if (!repos.length){
+        grid.innerHTML = `<div class="projects-note">No public repositories found yet. Check the profile directly on <a href="https://github.com/${GH_USER}" target="_blank" rel="noopener">GitHub</a>.</div>`;
+        stats.innerHTML = '';
+        filters.innerHTML = '';
+        return;
+      }
+
+      const totalStars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
+      stats.innerHTML = `<span><b>${repos.length}</b> repositories</span><span><b>${totalStars}</b> total stars</span>`;
+
+      const langs = Array.from(new Set(repos.map(r => r.language).filter(Boolean))).sort();
+      filters.innerHTML = `<button class="filter-chip active" data-lang="all">All</button>` +
+        langs.map(l => `<button class="filter-chip" data-lang="${l}"><span class="lang-dot" style="background:${langColor(l)}"></span>${l}</button>`).join('');
+
+      grid.innerHTML = repos.map(cardHTML).join('');
+
+      // staggered reveal
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting){
+            setTimeout(() => entry.target.classList.add('in'), i * 60);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12 });
+      grid.querySelectorAll('.project-card').forEach(card => io.observe(card));
+
+      filters.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          filters.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const lang = chip.dataset.lang;
+          grid.querySelectorAll('.project-card').forEach(card => {
+            const match = lang === 'all' || card.dataset.lang === lang;
+            card.style.display = match ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    function fromCache(){
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const { ts, data } = JSON.parse(raw);
+        if (Date.now() - ts > CACHE_TTL) return null;
+        return data;
+      } catch(e){ return null; }
+    }
+
+    function toCache(data){
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); }
+      catch(e){ /* storage unavailable, ignore */ }
+    }
+
+    async function loadProjects(){
+      const cached = fromCache();
+      if (cached){ render(cached); return; }
+
+      try {
+        const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=pushed`, {
+          headers: { Accept: 'application/vnd.github+json' }
+        });
+        if (!res.ok) throw new Error('GitHub API error ' + res.status);
+        let repos = await res.json();
+
+        repos = repos
+          .filter(r => !r.private && !EXCLUDE.has(r.name))
+          .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+
+        toCache(repos);
+        render(repos);
+      } catch (err){
+        grid.innerHTML = `<div class="projects-note">Couldn't load live project data right now. Browse everything directly on <a href="https://github.com/${GH_USER}" target="_blank" rel="noopener">GitHub</a>.</div>`;
+        stats.innerHTML = '';
+        filters.innerHTML = '';
+      }
+    }
+
+    loadProjects();
+  })();
 </script>
 
 </body>
