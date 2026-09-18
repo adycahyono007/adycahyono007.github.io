@@ -84,7 +84,7 @@
 
   /* ---------- nav ---------- */
   header{
-    position:sticky;top:0;z-index:100;
+    position:sticky;top:0;z-index:200;
     background:rgba(9,12,18,0.96);
     border-bottom:1px solid var(--border);
   }
@@ -102,18 +102,30 @@
     box-shadow:0 0 6px var(--cyan);transition:width .25s ease;
   }
   .navlinks a:hover::after, .navlinks a:focus-visible::after{width:100%;}
-  .burger{display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:8px 10px;cursor:pointer;}
+  .burger{display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:8px 10px;cursor:pointer;z-index:200;position:relative;}
   .burger span{display:block;width:18px;height:2px;background:var(--text);margin:4px 0;}
+
+  .nav-overlay{
+    position:fixed;inset:0;z-index:140;
+    background:rgba(4,6,10,.6);
+    opacity:0;visibility:hidden;
+    transition:opacity .3s ease, visibility .3s ease;
+  }
+  .nav-overlay.open{opacity:1;visibility:visible;}
 
   @media (max-width:760px){
     .navlinks{
-      position:fixed;top:64px;right:0;height:calc(100% - 64px);width:70%;max-width:280px;
+      position:fixed;top:0;right:0;bottom:0;height:100vh;height:100dvh;
+      width:70%;max-width:280px;z-index:150;
       background:var(--surface);border-left:1px solid var(--border);
-      flex-direction:column;gap:0;padding:24px;transform:translateX(100%);
+      flex-direction:column;gap:0;padding:88px 24px 24px;
+      transform:translateX(100%);
       transition:transform .3s ease;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
     }
     .navlinks.open{transform:translateX(0);}
-    .navlinks li{border-bottom:1px solid var(--border);width:100%;}
+    .navlinks li{border-bottom:1px solid var(--border);width:100%;flex:none;}
     .navlinks a{display:block;padding:16px 0;}
     .burger{display:block;}
   }
@@ -350,6 +362,7 @@
     </nav>
   </div>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section id="home" class="hero">
   <div class="wrap hero-grid">
@@ -494,14 +507,20 @@
   // mobile nav
   const burger = document.getElementById('burger');
   const navlinks = document.getElementById('navlinks');
-  burger.addEventListener('click', () => {
-    const open = navlinks.classList.toggle('open');
+  const navOverlay = document.getElementById('navOverlay');
+
+  function setNavOpen(open){
+    navlinks.classList.toggle('open', open);
+    navOverlay.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('locked', open);
+  }
+
+  burger.addEventListener('click', () => {
+    setNavOpen(!navlinks.classList.contains('open'));
   });
-  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    navlinks.classList.remove('open');
-    burger.setAttribute('aria-expanded', false);
-  }));
+  navOverlay.addEventListener('click', () => setNavOpen(false));
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNavOpen(false)));
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
